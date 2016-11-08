@@ -13,6 +13,11 @@ if [ ! -n "$WERCKER_S3_ARCHIVE_UPLOAD_BUCKET" ]; then
   export WERCKER_S3_ARCHIVE_UPLOAD_BUCKET="wercker-deployments"
 fi
 
+if [ ! -n "$WERCKER_S3_ARCHIVE_UPLOAD_REGION" ]; then
+  error 'Please specify region'
+  exit 1
+fi
+
 info 'Installing pip...'
 sudo apt-get update
 sudo apt-get install -y python-pip libpython-all-dev zip
@@ -26,11 +31,13 @@ aws --version
 mkdir -p $HOME/.aws
 echo '[default]' > $HOME/.aws/config
 echo 'output = json' >> $HOME/.aws/config
+echo "region = $WERCKER_S3_ARCHIVE_UPLOAD_REGION" >> $HOME/.aws/config
 echo "aws_access_key_id = $WERCKER_S3_ARCHIVE_UPLOAD_KEY" >> $HOME/.aws/config
 echo "aws_secret_access_key = $WERCKER_S3_ARCHIVE_UPLOAD_SECRET" >> $HOME/.aws/config
 
 export AMAZON_ACCESS_KEY_ID=$WERCKER_S3_ARCHIVE_UPLOAD_KEY
 export AMAZON_SECRET_ACCESS_KEY=$WERCKER_S3_ARCHIVE_UPLOAD_SECRET
+export AWS_DEFAULT_REGION=$WERCKER_S3_ARCHIVE_UPLOAD_REGION
 export AWS_APP_VERSION_LABEL=$WERCKER_GIT_COMMIT
 export AWS_APP_FILENAME=$AWS_APP_VERSION_LABEL.zip
 
