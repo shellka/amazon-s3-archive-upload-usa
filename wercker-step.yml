@@ -1,5 +1,5 @@
 name: s3-archive-upload
-version: "0.0.1"
+version: "0.0.3"
 description: Upload your application to s3 bucket using a zip of the application
 keywords:
   - AWS
