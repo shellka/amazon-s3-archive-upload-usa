@@ -43,4 +43,5 @@ if [ ! -f $AWS_APP_FILENAME ]; then
   exit 1
 fi
 
+aws configure set default.s3.signature_version s3v4
 aws s3 cp --acl private $AWS_APP_FILENAME s3://$WERCKER_S3_ARCHIVE_UPLOAD_BUCKET
