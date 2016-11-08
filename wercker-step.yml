@@ -1,0 +1,17 @@
+name: s3-archive-upload
+version: "0.0.1"
+description: Upload your application to s3 bucket using a zip of the application
+keywords:
+  - AWS
+  - S3
+  - Upload
+  - Zip
+properties:
+  key:
+    type: string
+    required: true
+  secret:
+    type: string
+    required: true
+  bucket:
+    type: string
